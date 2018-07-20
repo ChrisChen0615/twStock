@@ -45,7 +45,7 @@ def ExportExcel(obj):
     r = requests.post(url, data=data)
     data_json = r.json()
     if data_json["stat"] != "OK":
-        print("資料讀取失敗")
+        print("上市買賣超資料讀取失敗")
     else:
         basic_data = data_json["data"]
         adjust_data = []
@@ -94,7 +94,7 @@ def ExportExcel(obj):
 
         SaveDirectory = os.getcwd()  # 印出目前工作目錄
         SaveAs = os.path.join(SaveDirectory, 'daily',
-                              '上市買賣超.csv')  # 組合路徑，自動加上兩條斜線 "\\"
+                              'TWSEBuySell.csv')  # 組合路徑，自動加上兩條斜線 "\\"
 
         """
         open parameter:mode

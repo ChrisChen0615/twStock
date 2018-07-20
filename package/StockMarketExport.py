@@ -80,7 +80,7 @@ def main(dList):
 
     SaveDirectory = os.getcwd()  # 印出目前工作目錄
     SaveAs = os.path.join(SaveDirectory, 'daily',
-                          '大盤.csv')  # 組合路徑，自動加上兩條斜線 "\\"
+                          'TWSE.csv')  # 組合路徑，自動加上兩條斜線 "\\"
 
     # csv file exist or not
     # os.path.isfile('test.txt') #如果不存在就返回False

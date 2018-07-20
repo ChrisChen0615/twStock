@@ -89,7 +89,7 @@ def ExportExcel(obj):
 
     SaveDirectory = os.getcwd()  # 印出目前工作目錄
     SaveAs = os.path.join(SaveDirectory, 'daily',
-                          '上櫃買賣超.csv')  # 組合路徑，自動加上兩條斜線 "\\"
+                          'OTCBuySell.csv')  # 組合路徑，自動加上兩條斜線 "\\"
     with open(SaveAs, 'a', newline='') as csvfile:
         # 以空白分隔欄位，建立 CSV 檔寫入器
         writer = csv.writer(csvfile)
