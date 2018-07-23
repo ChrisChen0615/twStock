@@ -4,7 +4,8 @@ import csv
 from package.Infrastructure import DateObj
 from package.ScrapySource import Taeix, ForeignInvestor, PcRatio, MTX
 from package.ScrapySource import ForeignFuture, StockOption, FiveAndTen
-
+from openpyxl import Workbook
+from openpyxl import load_workbook
 
 def formatNum(no):
     """格式化數字，加千分位"""
@@ -80,37 +81,88 @@ def main(dList):
 
     SaveDirectory = os.getcwd()  # 印出目前工作目錄
     SaveAs = os.path.join(SaveDirectory, 'daily',
-                          'TWSE.csv')  # 組合路徑，自動加上兩條斜線 "\\"
+                          'TWSE.xlsx')  # 組合路徑，自動加上兩條斜線 "\\"
 
     # csv file exist or not
     # os.path.isfile('test.txt') #如果不存在就返回False
     # os.path.exists(directory) #如果目錄不存在就返回False
     csvExist = os.path.isfile(SaveAs)
 
+    row_idx = 1  # 列 起始:1
+    col_idx = 1  # 行 起始:1
+
     if csvExist:
-        # 開啟 CSV 檔案
-        rows_list = []
-        with open(SaveAs, newline='') as csvfile:
-            # 讀取 CSV 檔案內容
-            rows = csv.reader(csvfile)
-            rows_list.extend(rows)
+        wb = load_workbook(filename = SaveAs)
+        sheet = wb['大盤']
 
-        with open(SaveAs, 'w', newline='') as csvfile:
-            # 以空白分隔欄位，建立 CSV 檔寫入器
-            writer = csv.writer(csvfile)
-            for l in resultList:
-                rows_list.insert(1, l)
+        # 內容
+        for row in resultList:
+            sheet.insert_rows(2)
+            col_idx = 1
+            for r in row:
+                # 離最近日期開始排序，所以從標題下一列開始寫入資料
+                sheet.cell(row=2, column=col_idx).value = r
+                if col_idx == 5:
+                    sheet.cell(row=2, column=col_idx).number_format = '# ##0.00'
+                col_idx += 1
 
-            for l in rows_list:
-                writer.writerow(l)
+        # 保存一個文檔
+        wb.save(SaveAs)
+
     else:
-        with open(SaveAs, 'w', newline='') as csvfile:
-            # 以空白分隔欄位，建立 CSV 檔寫入器
-            writer = csv.writer(csvfile)
-            writer.writerow(resultList_tw)
-            for l in resultList:
-                writer.writerow(l)
+        # 創建一個工作薄
+        wb = Workbook()
 
+        # 創建一個工作表(注意是一個屬性)
+        sheet = wb.active
+
+        # excel創建的工作表名默認為sheet1,一下代碼實現了給新創建的工作表創建一個新的名字
+        sheet.title = '大盤'
+
+        # 向工作表中輸入內容1-標題
+        sheet.append(resultList_tw)
+        row_idx += 1
+
+        # 內容
+        for row in resultList:
+            sheet.insert_rows(2)
+            col_idx = 1
+            for r in row:
+                # 離最近日期開始排序，所以從標題下一列開始寫入資料
+                sheet.cell(row=2, column=col_idx).value = r
+                col_idx += 1
+
+        # 保存一個文檔
+        wb.save(SaveAs)
+
+
+# #2 import csv
+#     csvExist = os.path.isfile(SaveAs)
+#     if csvExist:
+#         # 開啟 CSV 檔案
+#         rows_list = []
+#         with open(SaveAs, newline='') as csvfile:
+#             # 讀取 CSV 檔案內容
+#             rows = csv.reader(csvfile)
+#             rows_list.extend(rows)
+
+#         with open(SaveAs, 'w', newline='') as csvfile:
+#             # 以空白分隔欄位，建立 CSV 檔寫入器
+#             writer = csv.writer(csvfile)
+#             for l in resultList:
+#                 rows_list.insert(1, l)
+
+#             for l in rows_list:
+#                 writer.writerow(l)
+#     else:
+#         with open(SaveAs, 'w', newline='') as csvfile:
+#             # 以空白分隔欄位，建立 CSV 檔寫入器
+#             writer = csv.writer(csvfile)
+#             writer.writerow(resultList_tw)
+#             for l in resultList:
+#                 writer.writerow(l)
+
+# 1 import csv
     # with open(SaveAs, 'a', newline='') as csvfile:
     #     # 以空白分隔欄位，建立 CSV 檔寫入器
     #     writer = csv.writer(csvfile)
