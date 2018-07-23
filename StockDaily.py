@@ -4,7 +4,7 @@ from package.ScrapyBuySell import TWSEBuySell, OTCBuySell
 import encodings
 
 #dateList = ['20180717','20180718','20180719','20180720']
-dateList = ['20180716']
+dateList = ['20180627']
 
 # 大盤excel
 StockMarketExport.main(dateList)

@@ -21,7 +21,6 @@ class MTX:
         self.bull = self.mtx_notsell - self.bull_side
         self.bear = self.mtx_notsell - self.bear_side
         self.ratio = (self.bull - self.bear) / self.mtx_notsell
-        # return (format(self.ratio, '.2%'))
 
     def CalNotsell(self):
         url = "https://www.taifex.com.tw/chinese/3/3_1_1.asp"
@@ -51,8 +50,7 @@ class MTX:
         rows = table[0].find_all('tr')
         last_row = len(rows) - 1  # 最末行
         cols = rows[last_row].find_all('td')
-        self.mtx_notsell = int(cols[12].text)
-        # return(int(cols[12].text))# 小台指未沖銷契約量
+        self.mtx_notsell = int(cols[12].text)# 小台指未沖銷契約量
 
     def CalBullAndBear(self):
         url = "https://www.taifex.com.tw/chinese/3/7_12_3.asp"

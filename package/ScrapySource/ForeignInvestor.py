@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from package.Infrastructure import DateObj
-
+from decimal import Decimal
 
 class ForeignInvestor:
     def __init__(self, obj):
@@ -27,4 +27,6 @@ class ForeignInvestor:
         intForeignWithoutDealar = int(foreignWithoutDealar[3].replace(',', ''))
         intDealr = int(dealr[3].replace(',', ''))
         count = intForeignWithoutDealar + intDealr
-        return '%.2f' %(count/100000000)
+        #return '%.2f' %(count/100000000)
+        total = count/100000000
+        return total

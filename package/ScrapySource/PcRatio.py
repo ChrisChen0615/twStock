@@ -11,7 +11,7 @@ class PCRatio:
 
     def GetRatio(self):
         url = "https://www.taifex.com.tw/chinese/3/PCRatio.asp"
-        data= {
+        data = {
             'dateend': self.dataDate.dateSlash,
             'datestart': self.dataDate.dateSlash,
             'download': ''
@@ -19,7 +19,7 @@ class PCRatio:
         r = requests.post(url, data=data)
         c = r.content  # text
         soup = BeautifulSoup(c, "html.parser")
-        
+
         table = soup.find_all('table', "table_a")
         rows = table[0].find_all('tr')
         pcRatio = []
@@ -32,5 +32,5 @@ class PCRatio:
                 break
         if(len(pcRatio) == 0):
             return 0
-        else:                            
-            return(pcRatio[6].text + "%")
+        else:
+            return(float(pcRatio[6].text) / 100)  # 百分比數字
