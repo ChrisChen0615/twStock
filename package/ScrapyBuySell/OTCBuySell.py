@@ -169,11 +169,11 @@ def ExportExcel(obj):
         # excel創建的工作表名默認為sheet1,一下代碼實現了給新創建的工作表創建一個新的名字
         sheet.title = sheetName
 
-    sheet.cell(row=row_idx, column=col_idx).value = "同步買"
+    sheet.cell(row=row_idx, column=col_idx).value = "同向"
     sheet.cell(row=row_idx, column=col_idx).fill = yellofill
 
     col_idx += 1
-    sheet.cell(row=row_idx, column=col_idx).value = "同步賣"
+    sheet.cell(row=row_idx, column=col_idx).value = "反向"
     sheet.cell(row=row_idx, column=col_idx).fill = greenfill
 
     row_idx += 1
