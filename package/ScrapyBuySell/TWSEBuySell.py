@@ -152,13 +152,13 @@ def ExportExcel(obj):
         col_idx = 1
         yellofill = PatternFill(fill_type='solid', fgColor=colors.YELLOW)
         greenfill = PatternFill(fill_type='solid', fgColor=colors.GREEN)
-        day2Color = colors.Color(rgb='0099FFFF')
+        day2Color = colors.Color(rgb='00CCFFFF')
         day2fill = PatternFill(fill_type='solid', fgColor=day2Color)
         day3Color = colors.Color(rgb='0099CCFF')
         day3fill = PatternFill(fill_type='solid', fgColor=day3Color)
-        day4Color = colors.Color(rgb='009999FF')
+        day4Color = colors.Color(rgb='E5CCFF')
         day4fill = PatternFill(fill_type='solid', fgColor=day4Color)
-        day5Color = colors.Color(rgb='00CC99FF')
+        day5Color = colors.Color(rgb='00FF99FF')
         day5fill = PatternFill(fill_type='solid', fgColor=day5Color)
 
         wb = GetWorkBook(fileObj)
