@@ -1,3 +1,4 @@
+# 取得歷史買賣超紀錄、計算前四日出現次數
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from package.Infrastructure import FileIO
@@ -11,7 +12,7 @@ def GetHistory(filePath):
     wb = load_workbook(filename=filePath)
     wbList = wb.sheetnames
     # 最多從後面取4個sheet
-    overFive = len(wbList) >= 5 and wbList[-4:] or []    
+    overFive = len(wbList) >= 5 and wbList[-4:] or []
     sheet4List = []  # 最多4個sheet 買賣超list
     for sheetName in overFive:
         one_sheet = wb[sheetName]
@@ -41,7 +42,8 @@ def GetHistory(filePath):
 
     return sheet4List
 
-def GetItemCount(listObj,typeObj,val):
+
+def GetItemCount(listObj, typeObj, val):
     """
     搜尋出現次數
     listObj:sheet list
@@ -52,8 +54,3 @@ def GetItemCount(listObj,typeObj,val):
     for l in listObj:
         cnt += l[typeObj].count(val)
     return cnt
-
-
-fileObj = FileIO.FileIO('OTCBuySell', '20180809')
-mysheethistroy = GetHistory(fileObj.SaveAs)
-print(GetItemCount(mysheethistroy,0,'3105'))

@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import copy
-from package.Infrastructure import DateObj, FileIO
+from package.Infrastructure import DateObj, FileIO, HistoryFind
 from openpyxl import Workbook
 from openpyxl import load_workbook
 # 使用openpyxl内置的格式
@@ -152,10 +152,20 @@ def ExportExcel(obj):
         col_idx = 1
         yellofill = PatternFill(fill_type='solid', fgColor=colors.YELLOW)
         greenfill = PatternFill(fill_type='solid', fgColor=colors.GREEN)
+        day2Color = colors.Color(rgb='0099FFFF')
+        day2fill = PatternFill(fill_type='solid', fgColor=day2Color)
+        day3Color = colors.Color(rgb='0099CCFF')
+        day3fill = PatternFill(fill_type='solid', fgColor=day3Color)
+        day4Color = colors.Color(rgb='009999FF')
+        day4fill = PatternFill(fill_type='solid', fgColor=day4Color)
+        day5Color = colors.Color(rgb='00CC99FF')
+        day5fill = PatternFill(fill_type='solid', fgColor=day5Color)
 
         wb = GetWorkBook(fileObj)
         sheetName = obj.strdate[4:]
         global sheet
+        # 歷史資料
+        historyList = HistoryFind.GetHistory(fileObj.SaveAs)
 
         if fileObj.XlsExist:
             if sheetName in wb.sheetnames:
@@ -176,6 +186,22 @@ def ExportExcel(obj):
         sheet.cell(row=row_idx, column=col_idx).value = "反向"
         sheet.cell(row=row_idx, column=col_idx).fill = greenfill
 
+        col_idx += 1
+        sheet.cell(row=row_idx, column=col_idx).value = "同2"
+        sheet.cell(row=row_idx, column=col_idx).fill = day2fill
+
+        col_idx += 1
+        sheet.cell(row=row_idx, column=col_idx).value = "同3"
+        sheet.cell(row=row_idx, column=col_idx).fill = day3fill
+
+        col_idx += 1
+        sheet.cell(row=row_idx, column=col_idx).value = "同4"
+        sheet.cell(row=row_idx, column=col_idx).fill = day4fill
+
+        col_idx += 1
+        sheet.cell(row=row_idx, column=col_idx).value = "同5"
+        sheet.cell(row=row_idx, column=col_idx).fill = day5fill
+
         row_idx += 1
         col_idx = 1
 
@@ -189,8 +215,22 @@ def ExportExcel(obj):
             for cell in row:
                 sheet.cell(row=row_idx, column=col_idx).value = cell
                 if (col_idx % 3) == 0:
+                    quotient = int(col_idx / 3)
+                    stockNo = sheet.cell(row=row_idx, column=(
+                        (quotient - 1)*3) + 1).value
+                    cnt = HistoryFind.GetItemCount(
+                        historyList, quotient - 1, stockNo)
+                    cnt += 1
                     sheet.cell(
                         row=row_idx, column=col_idx).number_format = '#,##0'
+                    if cnt == 2:
+                        sheet.cell(row=row_idx, column=col_idx).fill = day2fill
+                    if cnt == 3:
+                        sheet.cell(row=row_idx, column=col_idx).fill = day3fill
+                    if cnt == 4:
+                        sheet.cell(row=row_idx, column=col_idx).fill = day4fill
+                    if cnt == 5:
+                        sheet.cell(row=row_idx, column=col_idx).fill = day5fill
 
                 if col_idx == 2:  # 外資買超
                     if FindListIdx(local_Buy, cell) > 0:

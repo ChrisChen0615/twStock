@@ -27,6 +27,5 @@ class ForeignInvestor:
         intForeignWithoutDealar = int(foreignWithoutDealar[3].replace(',', ''))
         intDealr = int(dealr[3].replace(',', ''))
         count = intForeignWithoutDealar + intDealr
-        #return '%.2f' %(count/100000000)
         total = count/100000000
         return total
