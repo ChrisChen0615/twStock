@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # 取得歷史買賣超紀錄、計算前四日出現次數
 from openpyxl import Workbook
 from openpyxl import load_workbook
@@ -13,31 +14,22 @@ def GetHistory(filePath):
     wbList = wb.sheetnames
     # 最多從後面取4個sheet
     overFive = len(wbList) >= 5 and wbList[-4:] or []
-    sheet4List = []  # 最多4個sheet 買賣超list
+    sheet4List = []  # 買賣超股票代號list(最多4個sheet)
     for sheetName in overFive:
         one_sheet = wb[sheetName]
-        foreign_buy = []  # 單sheet 外資買超
-        foreign_sell = []  # 單sheet 外資賣超
-        local_buy = []  # 單sheet 投信買超
-        local_sell = []  # 單sheet 投信賣超
-        sheetList = []  # 單sheet外資、投信買賣超
-        for rowIdx in range(3, 33):
-            for colIdx in [1, 4, 7, 10]:
-                val = str(one_sheet.cell(
-                    row=rowIdx, column=colIdx).value).strip()
-                if val != "None":
-                    if colIdx == 1:
-                        foreign_buy.append(val)
-                    if colIdx == 4:
-                        foreign_sell.append(val)
-                    if colIdx == 7:
-                        local_buy.append(val)
-                    if colIdx == 10:
-                        local_sell.append(val)
-        sheetList.append(foreign_buy)
-        sheetList.append(foreign_sell)
-        sheetList.append(local_buy)
-        sheetList.append(local_sell)
+        # 買賣超股票代號list(單sheet)
+        sheetList = []
+
+        """
+        取得各買賣超股票代號list
+        colIdx:外資買超、外資賣超、投信買超、投信賣超股票代號欄位數
+        """
+        for colIdx in [1, 4, 7, 10]:
+            # 買賣超股票代號list(單欄)
+            data = [one_sheet.cell(row=i, column=colIdx).value for i in range(3, 33) if str(one_sheet.cell(
+                row=i, column=colIdx).value).strip() != "None"]
+            sheetList.append(data)
+
         sheet4List.append(sheetList)
 
     return sheet4List
