@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # 取得歷史買賣超紀錄、計算前四日出現次數
+import os
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from package.Infrastructure import FileIO
@@ -10,6 +11,9 @@ def GetHistory(filePath):
     取得前四天外資、投信買賣超紀錄
     filePath:檔案路徑
     """
+    if not os.path.isfile(filePath):  # 檔案是否存在
+        return []
+
     wb = load_workbook(filename=filePath)
     wbList = wb.sheetnames
     # 最多從後面取4個sheet
