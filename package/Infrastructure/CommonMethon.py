@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 # 共用方法
 from package.Infrastructure import DateObj, FileIO
-from openpyxl import Workbook
-from openpyxl import load_workbook
 import numpy as np
+from decimal import Decimal
 
 
 def formatNo(noStr):
@@ -15,6 +14,15 @@ def formatNo(noStr):
     noOrg = noStr.replace(',', '')
     noInt = int(noOrg)
     return int(noInt / 1000)
+
+def formatNumType(no, t):
+    """格式化數字，加千分位"""
+    if t == "int":
+        return int(no)
+    elif t == "float":
+        return float(no)
+    elif t == "decimal":
+        return Decimal(no).quantize(Decimal('0.00'))
 
 def FindNumpyIdx(npObj, elem, idx):
     """

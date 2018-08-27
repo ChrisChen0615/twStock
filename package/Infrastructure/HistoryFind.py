@@ -28,7 +28,7 @@ def GetHistory(filePath):
         取得各買賣超股票代號list
         colIdx:外資買超、外資賣超、投信買超、投信賣超股票代號欄位數
         """
-        for colIdx in [1, 4, 7, 10]:
+        for colIdx in [1, 4, 8, 11]:
             # 買賣超股票代號list(單欄)
             data = [one_sheet.cell(row=i, column=colIdx).value for i in range(3, 33) if str(one_sheet.cell(
                 row=i, column=colIdx).value).strip() != "None"]

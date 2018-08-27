@@ -4,6 +4,7 @@ import requests
 from package.Infrastructure import DateObj
 from package.Infrastructure import CommonMethon as _cm
 from package.ScrapyBuySell import BuySell
+import numpy as np
 
 
 class OTC(BuySell.BuySell):
@@ -30,6 +31,9 @@ class OTC(BuySell.BuySell):
         self.DataSourceByScrapy = data_json["aaData"]
         if len(self.DataSourceByScrapy) == 0:
             self.IsGetSource = False
+        # self.DataSourceByScrapy = np.array(data_json['aaData'])
+        # if self.DataSourceByScrapy.size == 0:
+        #     self.IsGetSource = False
 
     def FilterScrapyData(self):
         """
@@ -42,3 +46,9 @@ class OTC(BuySell.BuySell):
                         _cm.formatNo(x[10]),  # 外陸資買賣超股數
                         _cm.formatNo(x[13])]  # 投信買賣超股數
             self.FilterData.append(one_data)
+        # self.FilterData = np.array([])
+        # for x in self.DataSourceByScrapy:
+        #     one_data = [str(x[0]).strip(), x[1].strip(),
+        #                 _cm.formatNo(x[10]),  # 外陸資買賣超股數
+        #                 _cm.formatNo(x[13])]  # 投信買賣超股數
+        #     self.FilterData = np.concatenate(self.FilterData, one_data)
