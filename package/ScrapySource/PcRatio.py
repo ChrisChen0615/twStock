@@ -10,12 +10,12 @@ class PCRatio:
         self.dataDate = obj
 
     def GetRatio(self):
-        url = "https://www.taifex.com.tw/chinese/3/PCRatio.asp"
+        url = "http://www.taifex.com.tw/cht/3/pcRatio"        
         data = {
-            'dateend': self.dataDate.dateSlash,
-            'datestart': self.dataDate.dateSlash,
-            'download': ''
-        }
+            'queryEndDate': self.dataDate.dateSlash,
+            'queryStartDate': self.dataDate.dateSlash,
+            'down_type': ''
+        }        
         r = requests.post(url, data=data)
         c = r.content  # text
         soup = BeautifulSoup(c, "html.parser")

@@ -3,11 +3,12 @@ from package import StockMarketExport
 from package.ScrapyBuySell import TWSEBuySell, OTCBuySell
 import encodings
 
-#dateList = ['20180813','20180814','20180815']
-dateList = ['20180823']
+#dateList = ['20180821','20180822','20180823','20180824']
+dateList = ['20181001']
 
 # 大盤excel
-StockMarketExport.main(dateList)
+#五大 十大留倉數值有問題
+#StockMarketExport.main(dateList)
 
 # 上市外資(含陸資)、投信買賣超前三十
 twse = TWSEBuySell.TWSE(dateList)

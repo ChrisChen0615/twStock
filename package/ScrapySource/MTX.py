@@ -23,25 +23,18 @@ class MTX:
         self.ratio = (self.bull - self.bear) / self.mtx_notsell
 
     def CalNotsell(self):
-        url = "https://www.taifex.com.tw/chinese/3/3_1_1.asp"
+        url = "http://www.taifex.com.tw/cht/3/futDailyMarketReport"
         params = {
             'commodity_id': 'MTX',
             'commodity_id2': '',
             'commodity_id2t': '',
             'commodity_id2t2': '',
             'commodity_idt': 'MTX',
-            'DATA_DATE_D': self.dataDate.dataDay,
-            'DATA_DATE_M': self.dataDate.dataMonth,
-            'DATA_DATE_Y': self.dataDate.dataYear,
             'dateaddcnt': '0',
-            'datestart': self.dataDate.dateSlash,
-            'goday': '',
-            'market_code': '0',
+            'marketCode': '0',
             'MarketCode': '0',
-            'qtype': '2',
-            'sday': self.dataDate.dataDay,
-            'smonth': self.dataDate.dataMonth,
-            'syear': self.dataDate.dataYear
+            'queryDate': self.dataDate.dateSlash,
+            'qtype': '2'
         }
         result = requests.post(url, data=params)
         c = result.content  # text
@@ -50,20 +43,18 @@ class MTX:
         rows = table[0].find_all('tr')
         last_row = len(rows) - 1  # 最末行
         cols = rows[last_row].find_all('td')
-        self.mtx_notsell = int(cols[12].text)# 小台指未沖銷契約量
+        self.mtx_notsell = int(cols[12].text)  # 小台指未沖銷契約量
 
     def CalBullAndBear(self):
-        url = "https://www.taifex.com.tw/chinese/3/7_12_3.asp"
+        url = "http://www.taifex.com.tw/cht/3/futContractsDate"
         params = {
-            'COMMODITY_ID': 'MXF',
-            'DATA_DATE_D': self.dataDate.dataDay,
-            'DATA_DATE_M': self.dataDate.dataMonth,
-            'DATA_DATE_Y': self.dataDate.dataYear,
-            'datestart': self.dataDate.dateSlash,
-            'goday': '',
-            'sday': self.dataDate.dataDay,
-            'smonth': self.dataDate.dataMonth,
-            'syear': self.dataDate.dataYear
+            'commodityId': 'MXF',
+            'dateaddcnt': '',
+            'doQuery': '1',
+            'goDay': '',
+            'queryDate': self.dataDate.dateSlash,
+            'queryType': '1'
+
         }
         result = requests.post(url, data=params)
         c = result.content  # text

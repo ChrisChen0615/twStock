@@ -10,21 +10,11 @@ class FiveAndTen:
         self.ten_all = 0 #前十大交易人留倉部位(所有期約)
 
     def CalCount(self):
-        url = 'https://www.taifex.com.tw/chinese/3/7_8.asp'
+        url = 'http://www.taifex.com.tw/cht/3/getLargeTradersFutContract'
         params = {
-            'choose_dd': self.dataDate.dataDay,
-            'choose_item': 'ALL',
-            'choose_mm': self.dataDate.dataMonth,
-            'choose_yy': self.dataDate.dataYear,
-            'chooseitemtemp': 'ALL',
-            'datestart': self.dataDate.dateSlash,
-            'ddtemp': self.dataDate.dataDay,
-            'goday': '',
-            'mmtemp': self.dataDate.dataMonth,
-            'pFlag': '',
-            'yytemp': self.dataDate.dataYear
+            'queryDate': self.dataDate.dateSlash
         }
-        result = requests.post(url, data=params)
+        result = requests.post(url, params=params)
         c = result.content  # text
         soup = BeautifulSoup(c, "html.parser")
         table = soup.find_all('table', "table_f")

@@ -12,17 +12,14 @@ class ForeignFuture:
         self.future = 0  # 外資未平倉(口數):大+小/4
 
     def CalCount(self):
-        url = 'https://www.taifex.com.tw/chinese/3/7_12_3.asp'
+        url = 'http://www.taifex.com.tw/cht/3/futContractsDate'
         params = {
-            'COMMODITY_ID': '',
-            'DATA_DATE_D': self.dataDate.dataDay,
-            'DATA_DATE_M': self.dataDate.dataMonth,
-            'DATA_DATE_Y': self.dataDate.dataYear,
-            'datestart': self.dataDate.dateSlash,
+            'commodityId': '',
+            'dateaddcnt': '',
+            'doQuery': '1',
             'goday': '',
-            'sday': self.dataDate.dataDay,
-            'smonth': self.dataDate.dataMonth,
-            'syear': self.dataDate.dataYear
+            'queryDate': self.dataDate.dateSlash,
+            'queryType': '1'
         }
         result = requests.post(url, data=params)
         c = result.content  # text
