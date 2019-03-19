@@ -15,6 +15,7 @@ def formatNo(noStr):
     noInt = int(noOrg)
     return int(noInt / 1000)
 
+
 def formatNumType(no, t):
     """格式化數字，加千分位"""
     if t == "int":
@@ -24,6 +25,7 @@ def formatNumType(no, t):
     elif t == "decimal":
         return Decimal(no).quantize(Decimal('0.00'))
 
+
 def FindNumpyIdx(npObj, elem, idx):
     """
     從numpy object指定欄位idx取得elem的ndarray
@@ -32,7 +34,7 @@ def FindNumpyIdx(npObj, elem, idx):
     idx:npObj的指定比對欄位
     ref:https://ppt.cc/fHOUmx
     """
-    return npObj[np.where(np.isin(npObj[:,idx],elem))]
+    return npObj[np.where(np.isin(npObj[:, idx], elem))]
 
 
 def FindListIdx(listObj, elem):
@@ -47,14 +49,3 @@ def FindListIdx(listObj, elem):
         return 1
     except ValueError:
         return -1
-
-    # if elem.strip() == "":
-    #     return -1
-
-    # for row, i in enumerate(listObj):
-    #     try:
-    #         column = i.index(elem)
-    #     except ValueError:
-    #         continue
-    #     return 1
-    # return -1
