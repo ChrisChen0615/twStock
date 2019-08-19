@@ -19,7 +19,7 @@ class TWSE(BuySell.BuySell):
         從台灣證券交易所網站上爬取資料
         dataObj:日期資料物件
         """
-        url = 'http://wwwc.twse.com.tw/fund/T86'
+        url = 'https://wwwc.twse.com.tw/fund/T86'
         data = {
             'response': 'json',
             'date': dateObj.strdate,

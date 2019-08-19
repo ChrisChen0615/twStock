@@ -23,18 +23,18 @@ class MTX:
         self.ratio = (self.bull - self.bear) / self.mtx_notsell
 
     def CalNotsell(self):
-        url = "http://www.taifex.com.tw/cht/3/futDailyMarketReport"
+        url = "https://www.taifex.com.tw/cht/3/futDailyMarketReport"               
         params = {
             'commodity_id': 'MTX',
             'commodity_id2': '',
             'commodity_id2t': '',
             'commodity_id2t2': '',
             'commodity_idt': 'MTX',
-            'dateaddcnt': '0',
+            'dateaddcnt': '',
             'marketCode': '0',
             'MarketCode': '0',
             'queryDate': self.dataDate.dateSlash,
-            'qtype': '2'
+            'queryType': '2'
         }
         result = requests.post(url, data=params)
         c = result.content  # text

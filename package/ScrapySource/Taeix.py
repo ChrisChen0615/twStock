@@ -10,21 +10,31 @@ class Taeix:
         self.dataDate = obj
 
     def GetTaeixList(self):
-        url = "http://www.twse.com.tw/exchangeReport/MI_INDEX"
+        url = "https://www.twse.com.tw/exchangeReport/MI_INDEX"
         data = {
             'response': 'json',
             'date': self.dataDate.strdate,
-            'type': 'MS'
+            'type': 'IND'
         }
         r = requests.post(url, data=data)
         data_json = r.json()
         taeix = data_json["data1"][1]
-        total = float((data_json["data3"][13][1]).replace(
-            ',', '')) / 100000000  # 成交量(億元)
+        # total = float((data_json["data3"][13][1]).replace(
+        #     ',', '')) / 100000000  # 成交量(億元)
+        # 漲跌指數
         taeix[2] = BeautifulSoup(taeix[2], 'html.parser').find('p').text
         taeix[2] = (taeix[2] == "-") and taeix[2] + taeix[3] or taeix[3]
+        # 移除不必要的內容
         taeix.pop(3)
-        taeix[3] = formatFloat(taeix[3])  # 百分比數字
+        # 漲跌百分比
+        taeix[3] = formatFloat(taeix[3])
+
+        # 成交量
+        data["type"] = "MS2"
+        r = requests.post(url, data=data)
+        data_json = r.json()        
+        total = float((data_json["data1"][0][1]).replace(
+            ',', '')) / 100000000  # 成交量(億元)
         taeix.append(total)
         return taeix[1:]
 
@@ -36,7 +46,7 @@ def formatFloat(str):
     return float數字
     """
     try:
-        p = float(str)        
+        p = float(str)
     except ValueError:
         p = 0
 
