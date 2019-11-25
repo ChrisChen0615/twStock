@@ -3,8 +3,8 @@ from package import StockMarketExport
 from package.ScrapyBuySell import TWSEBuySell, OTCBuySell
 import encodings
 
-#dateList = ['20190703','20190704']
-dateList = ['20190819']
+#dateList = ['20191120','20191121']
+dateList = ['20191125']
 
 # 大盤excel
 #五大 十大留倉數值有問題

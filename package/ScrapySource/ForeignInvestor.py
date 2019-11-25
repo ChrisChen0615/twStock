@@ -10,13 +10,13 @@ class ForeignInvestor:
         self.dataDate = obj
 
     def GetCount(self):
-        url = "http://wwwc.twse.com.tw/fund/BFI82U"
+        url = "https://wwwc.twse.com.tw/fund/BFI82U"
         data = {
-            'response': 'json',
-            'dayDate': self.dataDate.strdate,
-            'weekDate': '',
-            'monthDate': '',
-            'type': 'day'
+            "response": "json",
+            "dayDate": self.dataDate.strdate,
+            "weekDate": "",
+            "monthDate": "",
+            "type": "day"
         }
         r = requests.post(url, data=data)
         data_json = r.json()
